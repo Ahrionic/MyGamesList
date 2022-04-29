@@ -10,26 +10,26 @@ import {
 } from 'react-bootstrap';
 
 import { useMutation } from '@apollo/client';
-import { SAVE_BOOK } from '../utils/mutations';
-import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
+import { SAVE_GAME } from '../utils/mutations';
+import { saveGameIds, getSavedGameIds } from '../utils/localStorage';
 
 import Auth from '../utils/auth';
 
 const SearchBooks = () => {
   // create state for holding returned google api data
-  const [searchedBooks, setSearchedBooks] = useState([]);
+  const [searchedGames, setSearchedGames] = useState([]);
   // create state for holding our search field data
   const [searchInput, setSearchInput] = useState('');
 
   // create state to hold saved bookId values
-  const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
+  const [savedGameIds, setSavedGameIds] = useState(getSavedGameIds());
 
-  const [saveBook, { error }] = useMutation(SAVE_BOOK);
+  const [saveGame, { error }] = useMutation(SAVE_GAME);
 
   // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
-    return () => saveBookIds(savedBookIds);
+    return () => saveGameIds(savedGameIds);
   });
 
   // create method to search for books and set state on form submit
@@ -52,14 +52,14 @@ const SearchBooks = () => {
       const { items } = await response.json();
 
       const bookData = items.map((book) => ({
-        bookId: book.id,
-        authors: book.volumeInfo.authors || ['No author to display'],
+        gameId: game.id,
+        creator: book.volumeInfo.authors || ['No author to display'],
         title: book.volumeInfo.title,
         description: book.volumeInfo.description,
         image: book.volumeInfo.imageLinks?.thumbnail || '',
       }));
 
-      setSearchedBooks(bookData);
+      setSearchedGames(gameData);
       setSearchInput('');
     } catch (err) {
       console.error(err);
@@ -67,9 +67,9 @@ const SearchBooks = () => {
   };
 
   // create function to handle saving a book to our database
-  const handleSaveBook = async (bookId) => {
+  const handleSaveBook = async (gameId) => {
     // find the book in `searchedBooks` state by the matching id
-    const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
+    const gameToSave = searchedGames.find((game) => game.game.Id === gameId);
 
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -92,7 +92,7 @@ const SearchBooks = () => {
     <>
       <Jumbotron fluid className="text-light bg-dark">
         <Container>
-          <h1>Search for Books!</h1>
+          <h1>Search for Games!</h1>
           <Form onSubmit={handleFormSubmit}>
             <Form.Row>
               <Col xs={12} md={8}>
@@ -117,18 +117,18 @@ const SearchBooks = () => {
 
       <Container>
         <h2>
-          {searchedBooks.length
-            ? `Viewing ${searchedBooks.length} results:`
+          {searchedGames.length
+            ? `Viewing ${searcheGames.length} results:`
             : 'Search for a book to begin'}
         </h2>
         <CardColumns>
-          {searchedBooks.map((book) => {
+          {searchedGames.map((book) => {
             return (
-              <Card key={book.bookId} border="dark">
-                {book.image ? (
+              <Card key={game.gameId} border="dark">
+                {game.image ? (
                   <Card.Img
-                    src={book.image}
-                    alt={`The cover for ${book.title}`}
+                    src={game.image}
+                    alt={`The cover for ${game.title}`}
                     variant="top"
                   />
                 ) : null}

@@ -9,19 +9,19 @@ import {
 
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_ME } from '../utils/queries';
-import { REMOVE_BOOK } from '../utils/mutations';
-import { removeBookId } from '../utils/localStorage';
+import { REMOVE_GAME} from '../utils/mutations';
+import { removeGameId } from '../utils/localStorage';
 
 import Auth from '../utils/auth';
 
-const SavedBooks = () => {
+const SavedGames = () => {
   const { loading, data } = useQuery(QUERY_ME);
-  const [removeBook, { error }] = useMutation(REMOVE_BOOK);
+  const [removeGame, { error }] = useMutation(REMOVE_GAME);
 
   const userData = data?.me || {};
 
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
-  const handleDeleteBook = async (bookId) => {
+  const handleDeleteGame = async (bookId) => {
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -30,12 +30,12 @@ const SavedBooks = () => {
     }
 
     try {
-      const { data } = await removeBook({
-        variables: { bookId },
+      const { data } = await removeGame({
+        variables: { gameId },
       });
 
       // upon success, remove book's id from localStorage
-      removeBookId(bookId);
+      removeBookId(gameId);
     } catch (err) {
       console.error(err);
     }
@@ -49,19 +49,19 @@ const SavedBooks = () => {
     <>
       <Jumbotron fluid className="text-light bg-dark">
         <Container>
-          <h1>Viewing {userData.username}'s books!</h1>
+          <h1>Viewing {userData.username}'s games!</h1>
         </Container>
       </Jumbotron>
       <Container>
         <h2>
-          {userData.savedBooks?.length
-            ? `Viewing ${userData.savedBooks.length} saved ${
-                userData.savedBooks.length === 1 ? 'book' : 'books'
+          {userData.savedGames?.length
+            ? `Viewing ${userData.savedGames.length} saved ${
+                userData.savedGames.length === 1 ? 'book' : 'books'
               }:`
             : 'You have no saved books!'}
         </h2>
         <CardColumns>
-          {userData.savedBooks?.map((book) => {
+          {userData.savedGames?.map((book) => {
             return (
               <Card key={book.bookId} border="dark">
                 {book.image ? (
