@@ -91,4 +91,4 @@ const SavedGames = () => {
   );
 };
 
-export default SavedGames;
+export default SavedGame;

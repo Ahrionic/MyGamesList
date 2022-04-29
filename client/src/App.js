@@ -8,8 +8,8 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
-import SearchGames from './pages/SearchGames';
-import SavedGames from './pages/SavedGames';
+import SearchGame from './pages/SearchGame';
+import SavedGame from './pages/SavedGame';
 import Navbar from './components/Navbar';
 
 // Construct our main GraphQL API endpoint
@@ -43,8 +43,8 @@ function App() {
         <>
           <Navbar />
           <Switch>
-            <Route exact path="/" component={SearchGames} />
-            <Route exact path="/saved" component={SavedGames} />
+            <Route exact path="/" component={SearchGame} />
+            <Route exact path="/saved" component={SavedGame} />
             <Route render={() => <h1 className="display-2">Wrong page!</h1>} />
           </Switch>
         </>

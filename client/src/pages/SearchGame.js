@@ -168,4 +168,4 @@ const SearchBooks = () => {
   );
 };
 
-export default SearchGames;
+export default SearchGame;
