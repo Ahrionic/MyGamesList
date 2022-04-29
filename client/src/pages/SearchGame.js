@@ -32,6 +32,8 @@ const SearchBooks = () => {
     return () => saveGameIds(savedGameIds);
   });
 
+  const rawgKey = '073f79e50bcb4ca187b5bdf70d87e86a'
+
   // create method to search for books and set state on form submit
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -41,10 +43,17 @@ const SearchBooks = () => {
     }
 
     try {
-      const response = await fetch(
-        `https://www.googleapis.com/books/v1/volumes?q=${searchInput}`
-      );
+      const response = await fetch('https://rawg-video-games-database.p.rapidapi.com/games?key=<rawgKey>', options);
 
+      const options = {
+        method: 'GET',
+        headers: {
+          'X-RapidAPI-Host': 'rawg-video-games-database.p.rapidapi.com',
+          'X-RapidAPI-Key': '0940aa0e08msh4e2680b65886283p11bd47jsn7caf496cf832'
+        }
+      };
+
+      
       if (!response.ok) {
         throw new Error('something went wrong!');
       }
@@ -122,7 +131,7 @@ const SearchBooks = () => {
             : 'Search for a book to begin'}
         </h2>
         <CardColumns>
-          {searchedGames.map((book) => {
+          {searchedGames.map((game) => {
             return (
               <Card key={game.gameId} border="dark">
                 {game.image ? (
@@ -133,20 +142,20 @@ const SearchBooks = () => {
                   />
                 ) : null}
                 <Card.Body>
-                  <Card.Title>{book.title}</Card.Title>
-                  <p className="small">Authors: {book.authors}</p>
-                  <Card.Text>{book.description}</Card.Text>
+                  <Card.Title>{game.title}</Card.Title>
+                  <p className="small">Authors: {game.authors}</p>
+                  <Card.Text>{game.description}</Card.Text>
                   {Auth.loggedIn() && (
                     <Button
-                      disabled={savedBookIds?.some(
-                        (savedId) => savedId === book.bookId
+                      disabled={savedGameIds?.some(
+                        (savedId) => savedId === game.gameId
                       )}
                       className="btn-block btn-info"
-                      onClick={() => handleSaveBook(book.bookId)}
+                      onClick={() => handleSaveGame(game.gameId)}
                     >
-                      {savedBookIds?.some((savedId) => savedId === book.bookId)
-                        ? 'Book Already Saved!'
-                        : 'Save This Book!'}
+                      {savedBookIds?.some((savedId) => savedId === game.gameId)
+                        ? 'Game Already Saved!'
+                        : 'Save This Game!'}
                     </Button>
                   )}
                 </Card.Body>
@@ -159,4 +168,4 @@ const SearchBooks = () => {
   );
 };
 
-export default SearchBooks;
+export default SearchGames;

@@ -56,30 +56,30 @@ const SavedGames = () => {
         <h2>
           {userData.savedGames?.length
             ? `Viewing ${userData.savedGames.length} saved ${
-                userData.savedGames.length === 1 ? 'book' : 'books'
+                userData.savedGames.length === 1 ? 'game' : 'games'
               }:`
             : 'You have no saved books!'}
         </h2>
         <CardColumns>
-          {userData.savedGames?.map((book) => {
+          {userData.savedGames?.map((game) => {
             return (
-              <Card key={book.bookId} border="dark">
-                {book.image ? (
+              <Card key={game.gameId} border="dark">
+                {game.image ? (
                   <Card.Img
-                    src={book.image}
-                    alt={`The cover for ${book.title}`}
+                    src={game.image}
+                    alt={`The cover for ${game.title}`}
                     variant="top"
                   />
                 ) : null}
                 <Card.Body>
-                  <Card.Title>{book.title}</Card.Title>
-                  <p className="small">Authors: {book.authors}</p>
-                  <Card.Text>{book.description}</Card.Text>
+                  <Card.Title>{game.title}</Card.Title>
+                  <p className="small">Authors: {game.authors}</p>
+                  <Card.Text>{game.description}</Card.Text>
                   <Button
                     className="btn-block btn-danger"
-                    onClick={() => handleDeleteBook(book.bookId)}
+                    onClick={() => handleDeleteGame(game.gameId)}
                   >
-                    Delete this Book!
+                    Delete this Game!
                   </Button>
                 </Card.Body>
               </Card>
@@ -91,4 +91,4 @@ const SavedGames = () => {
   );
 };
 
-export default SavedBooks;
+export default SavedGames;
