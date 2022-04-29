@@ -15,7 +15,7 @@ import { saveGameIds, getSavedGameIds } from '../utils/localStorage';
 
 import Auth from '../utils/auth';
 
-const SearchBooks = () => {
+const SearchGame = () => {
   // create state for holding returned google api data
   const [searchedGames, setSearchedGames] = useState([]);
   // create state for holding our search field data
@@ -43,16 +43,16 @@ const SearchBooks = () => {
     }
 
     try {
-      const response = await fetch('https://rawg-video-games-database.p.rapidapi.com/games?key=<rawgKey>', options);
-
       const options = {
         method: 'GET',
         headers: {
           'X-RapidAPI-Host': 'rawg-video-games-database.p.rapidapi.com',
           'X-RapidAPI-Key': '0940aa0e08msh4e2680b65886283p11bd47jsn7caf496cf832'
         }
+
       };
 
+      const response = await fetch('https://rawg-video-games-database.p.rapidapi.com/games?key=<rawgKey>', options);
       
       if (!response.ok) {
         throw new Error('something went wrong!');
@@ -60,12 +60,12 @@ const SearchBooks = () => {
 
       const { items } = await response.json();
 
-      const bookData = items.map((book) => ({
+      const gameData = items.map((game) => ({
         gameId: game.id,
-        creator: book.volumeInfo.authors || ['No author to display'],
-        title: book.volumeInfo.title,
-        description: book.volumeInfo.description,
-        image: book.volumeInfo.imageLinks?.thumbnail || '',
+        creator: game.volumeInfo.authors || ['No author to display'],
+        title: game.volumeInfo.title,
+        description: game.volumeInfo.description,
+        image: game.volumeInfo.imageLinks?.thumbnail || '',
       }));
 
       setSearchedGames(gameData);
@@ -76,7 +76,7 @@ const SearchBooks = () => {
   };
 
   // create function to handle saving a book to our database
-  const handleSaveBook = async (gameId) => {
+  const handleSaveGame = async (gameId) => {
     // find the book in `searchedBooks` state by the matching id
     const gameToSave = searchedGames.find((game) => game.game.Id === gameId);
 
@@ -88,11 +88,11 @@ const SearchBooks = () => {
     }
 
     try {
-      const { data } = await saveBook({
-        variables: { bookData: { ...bookToSave } },
+      const { data } = await saveGame({
+        variables: { gameData: { ...gameToSave } },
       });
-      console.log(savedBookIds);
-      setSavedBookIds([...savedBookIds, bookToSave.bookId]);
+      console.log(savedGameIds);
+      setSavedGameIds([...savedGameIds, gameToSave.gameId]);
     } catch (err) {
       console.error(err);
     }
@@ -127,7 +127,7 @@ const SearchBooks = () => {
       <Container>
         <h2>
           {searchedGames.length
-            ? `Viewing ${searcheGames.length} results:`
+            ? `Viewing ${searchedGames.length} results:`
             : 'Search for a book to begin'}
         </h2>
         <CardColumns>
@@ -153,7 +153,7 @@ const SearchBooks = () => {
                       className="btn-block btn-info"
                       onClick={() => handleSaveGame(game.gameId)}
                     >
-                      {savedBookIds?.some((savedId) => savedId === game.gameId)
+                      {savedGameIds?.some((savedId) => savedId === game.gameId)
                         ? 'Game Already Saved!'
                         : 'Save This Game!'}
                     </Button>

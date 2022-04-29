@@ -14,14 +14,14 @@ import { removeGameId } from '../utils/localStorage';
 
 import Auth from '../utils/auth';
 
-const SavedGames = () => {
+const SavedGame = () => {
   const { loading, data } = useQuery(QUERY_ME);
   const [removeGame, { error }] = useMutation(REMOVE_GAME);
 
   const userData = data?.me || {};
 
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
-  const handleDeleteGame = async (bookId) => {
+  const handleDeleteGame = async (gameId) => {
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -35,7 +35,7 @@ const SavedGames = () => {
       });
 
       // upon success, remove book's id from localStorage
-      removeBookId(gameId);
+      removeGameId(gameId);
     } catch (err) {
       console.error(err);
     }
