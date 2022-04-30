@@ -134,9 +134,9 @@ const SearchGame = () => {
           {searchedGames.map((game) => {
             return (
               <Card key={game.gameId} border="dark">
-                {game.image ? (
+                {game.thumbnail ? (
                   <Card.Img
-                    src={game.image}
+                    src={game.thumbnail}
                     alt={`The cover for ${game.title}`}
                     variant="top"
                   />
