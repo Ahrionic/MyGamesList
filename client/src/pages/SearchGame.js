@@ -46,13 +46,16 @@ const SearchGame = () => {
       const options = {
         method: 'GET',
         headers: {
-          'X-RapidAPI-Host': 'rawg-video-games-database.p.rapidapi.com',
-          'X-RapidAPI-Key': '0940aa0e08msh4e2680b65886283p11bd47jsn7caf496cf832'
+          'X-RapidAPI-Host': 'free-to-play-games-database.p.rapidapi.com',
+          'X-RapidAPI-Key': 'dec105ee6bmshca936e1844266f4p195268jsn40a6cdad4497'
         }
 
       };
 
-      const response = await fetch('https://rawg-video-games-database.p.rapidapi.com/games?key=<rawgKey>', options);
+      const response = fetch(`https://free-to-play-games-database.p.rapidapi.com/api/games?category=${searchInput}`, options)
+        .then(response => response.json())
+        .then(response => console.log(response))
+        .catch(err => console.error(err))
       
       if (!response.ok) {
         throw new Error('something went wrong!');
@@ -62,10 +65,10 @@ const SearchGame = () => {
 
       const gameData = items.map((game) => ({
         gameId: game.id,
-        creator: game.volumeInfo.authors || ['No author to display'],
-        title: game.volumeInfo.title,
-        description: game.volumeInfo.description,
-        image: game.volumeInfo.imageLinks?.thumbnail || '',
+        creator: game.developer || ['No developer'],
+        title: game.title,
+        description: game.short_description,
+        image: game.thumbnail || '',
       }));
 
       setSearchedGames(gameData);
@@ -128,7 +131,7 @@ const SearchGame = () => {
         <h2>
           {searchedGames.length
             ? `Viewing ${searchedGames.length} results:`
-            : 'Search for a book to begin'}
+            : 'Search for a game to begin'}
         </h2>
         <CardColumns>
           {searchedGames.map((game) => {
