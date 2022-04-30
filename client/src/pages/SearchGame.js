@@ -52,7 +52,7 @@ const SearchGame = () => {
 
       };
 
-      const response = fetch(`https://free-to-play-games-database.p.rapidapi.com/api/games?category=${searchInput}`, options)
+      const response = await fetch(`https://free-to-play-games-database.p.rapidapi.com/api/games?category=${searchInput}`, options)
         .then(response => response.json())
         .then(response => console.log(response))
         .catch(err => console.error(err))
@@ -77,6 +77,7 @@ const SearchGame = () => {
       console.error(err);
     }
   };
+
 
   // create function to handle saving a book to our database
   const handleSaveGame = async (gameId) => {
@@ -146,7 +147,7 @@ const SearchGame = () => {
                 ) : null}
                 <Card.Body>
                   <Card.Title>{game.title}</Card.Title>
-                  <p className="small">Authors: {game.authors}</p>
+                  <p className="small">Creator: {game.creator}</p>
                   <Card.Text>{game.description}</Card.Text>
                   {Auth.loggedIn() && (
                     <Button
