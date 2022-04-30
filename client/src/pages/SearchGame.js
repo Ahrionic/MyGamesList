@@ -27,12 +27,9 @@ const SearchGame = () => {
   const [saveGame, { error }] = useMutation(SAVE_GAME);
 
   // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
-  // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
     return () => saveGameIds(savedGameIds);
   });
-
-  const rawgKey = '073f79e50bcb4ca187b5bdf70d87e86a'
 
   // create method to search for books and set state on form submit
   const handleFormSubmit = async (event) => {
@@ -52,7 +49,7 @@ const SearchGame = () => {
 
       };
 
-      const response = fetch(`https://free-to-play-games-database.p.rapidapi.com/api/games?category=${searchInput}`, options)
+      const response = await fetch(`https://free-to-play-games-database.p.rapidapi.com/api/games?category=${searchInput}`, options)
         .then(response => response.json())
         .then(response => console.log(response))
         .catch(err => console.error(err))
