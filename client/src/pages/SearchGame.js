@@ -101,7 +101,7 @@ const SearchGame = () => {
     <>
       <Jumbotron fluid className="text-light bg-dark">
         <Container>
-          <h1>Search for Games!</h1>
+          <h1>Search for Free Games!</h1>
           <Form onSubmit={handleFormSubmit}>
             <Form.Row>
               <Col xs={12} md={8}>
@@ -111,7 +111,7 @@ const SearchGame = () => {
                   onChange={(e) => setSearchInput(e.target.value)}
                   type="text"
                   size="lg"
-                  placeholder="Search for a game"
+                  placeholder="Search for a genre"
                 />
               </Col>
               <Col xs={12} md={4}>
@@ -128,7 +128,7 @@ const SearchGame = () => {
         <h2>
           {searchedGames.length
             ? `Viewing ${searchedGames.length} results:`
-            : 'Search for a game to begin'}
+            : 'Search for a genre to begin'}
         </h2>
         <CardColumns>
           {searchedGames.map((game) => {
@@ -143,8 +143,8 @@ const SearchGame = () => {
                 ) : null}
                 <Card.Body>
                   <Card.Title>{game.title}</Card.Title>
-                  <p className="small">Authors: {game.authors}</p>
-                  <Card.Text>{game.description}</Card.Text>
+                  <p className="small">Authors: {game.developer}</p>
+                  <Card.Text>{game.short_description}</Card.Text>
                   {Auth.loggedIn() && (
                     <Button
                       disabled={savedGameIds?.some(
