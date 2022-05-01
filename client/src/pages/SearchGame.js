@@ -87,7 +87,7 @@ const SearchGame = () => {
   // create function to handle saving a game to our database
   const handleSaveGame = async (gameId) => {
     // find the book in `searchedGames` state by the matching id
-    const gameToSave = searchedGames.find((game) => game.game.Id === gameId);
+    const gameToSave = searchedGames.find((game) => game.gameId === gameId);
 
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -152,7 +152,7 @@ const SearchGame = () => {
                 ) : null}
                 <Card.Body>
                   <Card.Title>{game.title}</Card.Title>
-                  <p className="small">Creators: {game.creator}</p>
+                  <p className="small">Creators: {game.title}</p>
                   <Card.Text>{game.description}</Card.Text>
                   {Auth.loggedIn() && (
                     <Button
