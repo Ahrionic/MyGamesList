@@ -15,23 +15,33 @@ import { saveGameIds, getSavedGameIds } from '../utils/localStorage';
 
 import Auth from '../utils/auth';
 
+const options = {
+  method: 'GET',
+  headers: {
+    'X-RapidAPI-Host': 'free-to-play-games-database.p.rapidapi.com',
+    'X-RapidAPI-Key': 'dec105ee6bmshca936e1844266f4p195268jsn40a6cdad4497'
+  }
+}
+
+var games = [];
+
 const SearchGame = () => {
-  // create state for holding returned google api data
+  // create state for holding returned api data
   const [searchedGames, setSearchedGames] = useState([]);
   // create state for holding our search field data
   const [searchInput, setSearchInput] = useState('');
 
-  // create state to hold saved bookId values
+  // create state to hold saved game id values
   const [savedGameIds, setSavedGameIds] = useState(getSavedGameIds());
 
   const [saveGame, { error }] = useMutation(SAVE_GAME);
 
-  // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
+  // set up useEffect hook to save `gameIDs` list to localStorage on component unmount
   useEffect(() => {
     return () => saveGameIds(savedGameIds);
   });
 
-  // create method to search for books and set state on form submit
+  // create method to search for games and set state on form submit
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
@@ -40,25 +50,22 @@ const SearchGame = () => {
     }
 
     try {
-      const options = {
-        method: 'GET',
-        headers: {
-          'X-RapidAPI-Host': 'free-to-play-games-database.p.rapidapi.com',
-          'X-RapidAPI-Key': 'dec105ee6bmshca936e1844266f4p195268jsn40a6cdad4497'
-        }
+      const games = await fetch(
+        `https://free-to-play-games-database.p.rapidapi.com/api/games?category=${searchInput}`, options)
+        // .then(response => response.json())
+        // .then(response => console.log(response))
 
-      
+      if (!games.ok) {
+        throw new Error('something went wrong!');
+      }
 
-      const response = await fetch(`https://free-to-play-games-database.p.rapidapi.com/api/games?category=${searchInput}`, options)
-        .then(response => response.json())
-        .then(async response => { 
-              if (!response.ok) {
-          throw new Error('something went wrong!');
-        }
-  
-      
+      const items = await games.json();
+      console.log('console logging items: ')
+      console.log(items)
+      console.log('console logging games: ')
+      console.log(games)
 
-      const { items } = await response.json();
+
 
       const gameData = items.map((game) => ({
         gameId: game.id,
@@ -67,19 +74,19 @@ const SearchGame = () => {
         description: game.short_description,
         image: game.thumbnail || '',
       }));
-      
+
 
       setSearchedGames(gameData);
       setSearchInput('');
-    })
-   }; .catch(err => console.error(err))
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
-  };
 
-
-  // create function to handle saving a book to our database
+  // create function to handle saving a game to our database
   const handleSaveGame = async (gameId) => {
-    // find the book in `searchedBooks` state by the matching id
+    // find the book in `searchedGames` state by the matching id
     const gameToSave = searchedGames.find((game) => game.game.Id === gameId);
 
     // get token
@@ -145,7 +152,7 @@ const SearchGame = () => {
                 ) : null}
                 <Card.Body>
                   <Card.Title>{game.title}</Card.Title>
-                  <p className="small">Authors: {game.developer}</p>
+                  <p className="small">Creators: {game.creator}</p>
                   <Card.Text>{game.short_description}</Card.Text>
                   {Auth.loggedIn() && (
                     <Button
