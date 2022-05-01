@@ -47,8 +47,6 @@ const SearchGame = () => {
           'X-RapidAPI-Key': 'dec105ee6bmshca936e1844266f4p195268jsn40a6cdad4497'
         }
 
-      
-
       const response = await fetch(`https://free-to-play-games-database.p.rapidapi.com/api/games?category=${searchInput}`, options)
         .then(response => response.json())
         .then(async response => { 
