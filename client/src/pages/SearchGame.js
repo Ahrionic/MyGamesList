@@ -27,12 +27,9 @@ const SearchGame = () => {
   const [saveGame, { error }] = useMutation(SAVE_GAME);
 
   // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
-  // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
     return () => saveGameIds(savedGameIds);
   });
-
-  const rawgKey = '073f79e50bcb4ca187b5bdf70d87e86a'
 
   // create method to search for books and set state on form submit
   const handleFormSubmit = async (event) => {
@@ -50,16 +47,16 @@ const SearchGame = () => {
           'X-RapidAPI-Key': 'dec105ee6bmshca936e1844266f4p195268jsn40a6cdad4497'
         }
 
-      };
+      
 
       const response = await fetch(`https://free-to-play-games-database.p.rapidapi.com/api/games?category=${searchInput}`, options)
         .then(response => response.json())
-        .then(response => console.log(response))
-        .catch(err => console.error(err))
+        .then(async response => { 
+              if (!response.ok) {
+          throw new Error('something went wrong!');
+        }
+  
       
-      if (!response.ok) {
-        throw new Error('something went wrong!');
-      }
 
       const { items } = await response.json();
 
@@ -70,12 +67,13 @@ const SearchGame = () => {
         description: game.short_description,
         image: game.thumbnail || '',
       }));
+      
 
       setSearchedGames(gameData);
       setSearchInput('');
-    } catch (err) {
-      console.error(err);
-    }
+    })
+   }; .catch(err => console.error(err))
+
   };
 
 
@@ -105,7 +103,7 @@ const SearchGame = () => {
     <>
       <Jumbotron fluid className="text-light bg-dark">
         <Container>
-          <h1>Search for Games!</h1>
+          <h1>Search for Free Games!</h1>
           <Form onSubmit={handleFormSubmit}>
             <Form.Row>
               <Col xs={12} md={8}>
@@ -115,7 +113,7 @@ const SearchGame = () => {
                   onChange={(e) => setSearchInput(e.target.value)}
                   type="text"
                   size="lg"
-                  placeholder="Search for a game"
+                  placeholder="Search for a genre"
                 />
               </Col>
               <Col xs={12} md={4}>
@@ -132,23 +130,23 @@ const SearchGame = () => {
         <h2>
           {searchedGames.length
             ? `Viewing ${searchedGames.length} results:`
-            : 'Search for a game to begin'}
+            : 'Search for a genre to begin'}
         </h2>
         <CardColumns>
           {searchedGames.map((game) => {
             return (
               <Card key={game.gameId} border="dark">
-                {game.image ? (
+                {game.thumbnail ? (
                   <Card.Img
-                    src={game.image}
+                    src={game.thumbnail}
                     alt={`The cover for ${game.title}`}
                     variant="top"
                   />
                 ) : null}
                 <Card.Body>
                   <Card.Title>{game.title}</Card.Title>
-                  <p className="small">Creator: {game.creator}</p>
-                  <Card.Text>{game.description}</Card.Text>
+                  <p className="small">Authors: {game.developer}</p>
+                  <Card.Text>{game.short_description}</Card.Text>
                   {Auth.loggedIn() && (
                     <Button
                       disabled={savedGameIds?.some(
