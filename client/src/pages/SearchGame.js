@@ -47,16 +47,16 @@ const SearchGame = () => {
           'X-RapidAPI-Key': 'dec105ee6bmshca936e1844266f4p195268jsn40a6cdad4497'
         }
 
-      };
+      
 
       const response = await fetch(`https://free-to-play-games-database.p.rapidapi.com/api/games?category=${searchInput}`, options)
         .then(response => response.json())
-        .then(response => console.log(response))
-        .catch(err => console.error(err))
+        .then(async response => { 
+              if (!response.ok) {
+          throw new Error('something went wrong!');
+        }
+  
       
-      if (!response.ok) {
-        throw new Error('something went wrong!');
-      }
 
       const { items } = await response.json();
 
@@ -67,12 +67,13 @@ const SearchGame = () => {
         description: game.short_description,
         image: game.thumbnail || '',
       }));
+      
 
       setSearchedGames(gameData);
       setSearchInput('');
-    } catch (err) {
-      console.error(err);
-    }
+    })
+   }; .catch(err => console.error(err))
+
   };
 
   // create function to handle saving a book to our database
