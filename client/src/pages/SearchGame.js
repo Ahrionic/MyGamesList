@@ -153,7 +153,7 @@ const SearchGame = () => {
                 <Card.Body>
                   <Card.Title>{game.title}</Card.Title>
                   <p className="small">Creators: {game.creator}</p>
-                  <Card.Text>{game.short_description}</Card.Text>
+                  <Card.Text>{game.description}</Card.Text>
                   {Auth.loggedIn() && (
                     <Button
                       disabled={savedGameIds?.some(
