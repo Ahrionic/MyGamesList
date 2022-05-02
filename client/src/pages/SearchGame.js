@@ -108,9 +108,9 @@ const SearchGame = () => {
   };
   return (
     <>
-      <Jumbotron fluid className="text-light bg-dark">
+      <Jumbotron fluid className="text-light bg-secondary">
         <Container>
-          <h1>Search for Free Games!</h1>
+          <h1>Search for Free to Play Games!</h1>
           <Form onSubmit={handleFormSubmit}>
             <Form.Row>
               <Col xs={12} md={8}>
@@ -124,8 +124,8 @@ const SearchGame = () => {
                 />
               </Col>
               <Col xs={12} md={4}>
-                <Button type="submit" variant="success" size="lg">
-                  Submit Search
+                <Button type="submit" variant="dark" size="lg">
+                  Search
                 </Button>
               </Col>
             </Form.Row>
@@ -137,7 +137,7 @@ const SearchGame = () => {
         <h2>
           {searchedGames.length
             ? `Viewing ${searchedGames.length} results:`
-            : 'Search for a genre to begin'}
+            : ''}
         </h2>
         <CardColumns>
           {searchedGames.map((game) => {
