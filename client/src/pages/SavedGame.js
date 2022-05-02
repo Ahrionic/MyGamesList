@@ -30,7 +30,7 @@ const SavedGame = () => {
     }
 
     try {
-      const { data } = await removeGame({
+      const data  = await removeGame({
         variables: { gameId },
       });
 
@@ -73,7 +73,7 @@ const SavedGame = () => {
                 ) : null}
                 <Card.Body>
                   <Card.Title>{game.title}</Card.Title>
-                  <p className="small">Authors: {game.authors}</p>
+                  <p className="small">Creators: {game.creator}</p>
                   <Card.Text>{game.description}</Card.Text>
                   <Button
                     className="btn-block btn-danger"

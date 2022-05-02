@@ -52,21 +52,13 @@ const SearchGame = () => {
     try {
       const games = await fetch(
         `https://free-to-play-games-database.p.rapidapi.com/api/games?category=${searchInput}`, options)
-        // .then(response => response.json())
-        // .then(response => console.log(response))
 
       if (!games.ok) {
         throw new Error('something went wrong!');
       }
 
       const items = await games.json();
-      console.log('console logging items: ')
-      console.log(items)
-      console.log('console logging games: ')
-      console.log(games)
-
-
-
+   
       const gameData = items.map((game) => ({
         gameId: game.id,
         creator: game.developer || ['No developer'],
@@ -87,7 +79,7 @@ const SearchGame = () => {
   // create function to handle saving a game to our database
   const handleSaveGame = async (gameId) => {
     // find the book in `searchedGames` state by the matching id
-    const gameToSave = searchedGames.find((game) => game.game.Id === gameId);
+    const gameToSave = searchedGames.find((game) => game.id === gameId);
 
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
