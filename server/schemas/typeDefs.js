@@ -6,7 +6,7 @@ const typeDefs = gql`
     username: String!
     email: String
     gameCount: Int
-    savedGames: [Game]
+    savedGames: [game]
   }
 
   type game {
@@ -39,7 +39,7 @@ const typeDefs = gql`
   type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
-    saveGame(gameData: gameInput!): User
+    savedGames(gameData: gameInput!): User
     removeGame(gameId: ID!): User
   }
 `;

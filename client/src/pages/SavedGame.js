@@ -52,7 +52,7 @@ const SavedGame = () => {
           <h1>Viewing {userData.username}'s games!</h1>
         </Container>
       </Jumbotron>
-      <Container>
+      <Container className='bg'>
         <h2>
           {userData.savedGames?.length
             ? `Viewing ${userData.savedGames.length} saved ${

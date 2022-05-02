@@ -1,6 +1,12 @@
 body {
   font-family: 'Rubik', sans-serif;
+   background-image: url("https://img.freepik.com/free-vector/pixel-art-game-background-grass-sky-clouds_210544-60.jpg?w=1060");
+  height: 50vh;
+  background-position: center;
+  background-repeat: repeat; 
+  background-size: cover;
 }
+
 
 h1,
 h2,
