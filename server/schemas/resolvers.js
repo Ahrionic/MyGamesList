@@ -52,11 +52,11 @@ const resolvers = {
 
       throw new AuthenticationError('You need to be logged in!');
     },
-    removeGame: async (parent, { gameId }, context) => {
+    removeGame: async (parent, gameData, context) => {
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $pull: { saveGames: { gameId } } },
+          { $pull: { savedGames: gameData } },
           { new: true }
         );
 
