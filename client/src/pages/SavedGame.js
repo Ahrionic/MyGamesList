@@ -34,7 +34,7 @@ const SavedGame = () => {
         variables: { gameId },
       });
 
-      // upon success, remove book's id from localStorage
+      // upon success, remove games id from localStorage
       removeGameId(gameId);
     } catch (err) {
       console.error(err);
