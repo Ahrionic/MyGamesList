@@ -23,7 +23,7 @@ const options = {
   }
 }
 
-var games = [];
+// var games = [];
 
 const SearchGame = () => {
   // create state for holding returned api data
@@ -148,7 +148,7 @@ const SearchGame = () => {
                 ) : null}
                 <Card.Body>
                   <Card.Title>{game.title}</Card.Title>
-                  <p className="small">Creators: {game.creator}</p>
+                  <p className="small">Creators: {game.title}</p>
                   <Card.Text>{game.description}</Card.Text>
                   {Auth.loggedIn() && (
                     <Button

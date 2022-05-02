@@ -13,7 +13,7 @@ export const LOGIN_USER = gql`
 `;
 
 export const ADD_USER = gql`
- mutation adduser($username: String!, $email: String!, $password: String!) {
+ mutation addUser($username: String!, $email: String!, $password: String!) {
   addUser(username: $username, email: $email, password: $password) {
     token
     user {
@@ -25,6 +25,7 @@ export const ADD_USER = gql`
 `;
 
 export const SAVE_GAME = gql`
+
   mutation saveGame($creator: String!, $description: String!, $gameId: String!, $image: String!, $title: String!) {
   saveGame(creator: $creator, description: $description, gameId: $gameId, image: $image, title: $title) {
     _id
@@ -34,9 +35,9 @@ export const SAVE_GAME = gql`
       gameId
       creator
       image
-      link
-      title
       description
+      title
+      link
     }
   }
 }
@@ -51,10 +52,10 @@ export const REMOVE_GAME = gql`
     savedGames {
       gameId
       creator
-      description
       image
-      link
+      description
       title
+      link
     }
   }
 }
