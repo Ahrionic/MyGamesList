@@ -78,8 +78,10 @@ const SearchGame = () => {
 
   // create function to handle saving a game to our database
   const handleSaveGame = async (gameId) => {
+    console.log(gameId)
+    console.log(searchedGames)
     // find the book in `searchedGames` state by the matching id
-    const gameToSave = searchedGames.find((game) => game.id === gameId);
+    const gameToSave = searchedGames.find((game) => game.gameId === gameId);
 
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -89,8 +91,10 @@ const SearchGame = () => {
     }
 
     try {
+      console.log(gameToSave)
+
       const { data } = await saveGame({
-        variables: { gameData: { ...gameToSave } },
+        variables: { gameId: `${gameToSave.gameId}`, creator: gameToSave.creator, title: gameToSave.title, description: gameToSave.description, image: gameToSave.image },
       });
       console.log(savedGameIds);
       setSavedGameIds([...savedGameIds, gameToSave.gameId]);
