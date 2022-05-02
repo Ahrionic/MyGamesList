@@ -9,7 +9,7 @@ import {
 
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_ME } from '../utils/queries';
-import { REMOVE_GAME} from '../utils/mutations';
+import { REMOVE_GAME } from '../utils/mutations';
 import { removeGameId } from '../utils/localStorage';
 
 import Auth from '../utils/auth';
@@ -30,12 +30,12 @@ const SavedGame = () => {
     }
 
     try {
-      const data  = await removeGame({
-        variables: { gameId },
+      const data = await removeGame({
+        variables: { gameId: `${removeGame.gameId}`, creator: removeGame.creator, title: removeGame.title, description: removeGame.description, image: removeGame.image },
       });
 
-      // upon success, remove games id from localStorage
-      removeGameId(gameId);
+      // upon success, remove game's id from localStorage
+      removeGameId([...removeGameId, removeGame.gameId]);
     } catch (err) {
       console.error(err);
     }
@@ -55,9 +55,8 @@ const SavedGame = () => {
       <Container className='bg'>
         <h2>
           {userData.savedGames?.length
-            ? `Viewing ${userData.savedGames.length} saved ${
-                userData.savedGames.length === 1 ? 'game' : 'games'
-              }:`
+            ? `Viewing ${userData.savedGames.length} saved ${userData.savedGames.length === 1 ? 'game' : 'games'
+            }:`
             : 'You have no saved games!'}
         </h2>
         <CardColumns>
