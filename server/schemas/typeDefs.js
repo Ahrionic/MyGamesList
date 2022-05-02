@@ -24,7 +24,7 @@ const typeDefs = gql`
   }
 
   input GameInput {
-    authors: [String]
+    creator: [String]
     description: String!
     gameId: String!
     image: String
