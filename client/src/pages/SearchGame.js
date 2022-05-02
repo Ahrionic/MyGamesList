@@ -23,7 +23,7 @@ const options = {
   }
 }
 
-var games = [];
+// var games = [];
 
 const SearchGame = () => {
   // create state for holding returned api data
