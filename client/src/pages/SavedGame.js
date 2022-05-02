@@ -30,7 +30,7 @@ const SavedGame = () => {
     }
 
     try {
-      const { data } = await removeGame({
+      const data  = await removeGame({
         variables: { gameId },
       });
 
@@ -52,7 +52,7 @@ const SavedGame = () => {
           <h1>Viewing {userData.username}'s games!</h1>
         </Container>
       </Jumbotron>
-      <Container>
+      <Container className='bg'>
         <h2>
           {userData.savedGames?.length
             ? `Viewing ${userData.savedGames.length} saved ${
@@ -63,18 +63,19 @@ const SavedGame = () => {
         <CardColumns>
           {userData.savedGames?.map((game) => {
             return (
-              <Card key={game.gameId} border="dark">
-                {game.image ? (
+              <Card key={game.id} border="dark">
+                {game.thumbnail ? (
                   <Card.Img
-                    src={game.image}
+                    src={game.thumbnail}
                     alt={`The cover for ${game.title}`}
                     variant="top"
                   />
                 ) : null}
                 <Card.Body>
                   <Card.Title>{game.title}</Card.Title>
-                  <p className="small">Authors: {game.authors}</p>
+                  <p className="small">Creators: {game.creator}</p>
                   <Card.Text>{game.description}</Card.Text>
+
                   <Button
                     className="btn-block btn-danger"
                     onClick={() => handleDeleteGame(game.gameId)}

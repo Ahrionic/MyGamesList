@@ -38,11 +38,12 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    saveGame: async (parent, { gameData }, context) => {
+    saveGame: async (parent, gameData, context) => {
       if (context.user) {
+        console.log(gameData, context.user)
         const updatedUser = await User.findByIdAndUpdate(
           { _id: context.user._id },
-          { $push: { saveGames: gameData } },
+          { $push: { savedGames: gameData } },
           { new: true }
         );
 
@@ -55,7 +56,7 @@ const resolvers = {
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $pull: { saveGames: { gameId } } },
+          { $pull: { savedGames: { gameId } } },
           { new: true }
         );
 
