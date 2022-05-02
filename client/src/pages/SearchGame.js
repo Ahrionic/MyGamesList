@@ -52,21 +52,13 @@ const SearchGame = () => {
     try {
       const games = await fetch(
         `https://free-to-play-games-database.p.rapidapi.com/api/games?category=${searchInput}`, options)
-        // .then(response => response.json())
-        // .then(response => console.log(response))
 
       if (!games.ok) {
         throw new Error('something went wrong!');
       }
 
       const items = await games.json();
-      console.log('console logging items: ')
-      console.log(items)
-      console.log('console logging games: ')
-      console.log(games)
-
-
-
+   
       const gameData = items.map((game) => ({
         gameId: game.id,
         creator: game.developer || ['No developer'],
@@ -86,6 +78,8 @@ const SearchGame = () => {
 
   // create function to handle saving a game to our database
   const handleSaveGame = async (gameId) => {
+    console.log(gameId)
+    console.log(searchedGames)
     // find the book in `searchedGames` state by the matching id
     const gameToSave = searchedGames.find((game) => game.gameId === gameId);
 
@@ -97,8 +91,10 @@ const SearchGame = () => {
     }
 
     try {
+      console.log(gameToSave)
+
       const { data } = await saveGame({
-        variables: { gameData: { ...gameToSave } },
+        variables: { gameId: `${gameToSave.gameId}`, creator: gameToSave.creator, title: gameToSave.title, description: gameToSave.description, image: gameToSave.image },
       });
       console.log(savedGameIds);
       setSavedGameIds([...savedGameIds, gameToSave.gameId]);
@@ -108,9 +104,9 @@ const SearchGame = () => {
   };
   return (
     <>
-      <Jumbotron fluid className="text-light bg-dark">
+      <Jumbotron fluid className="text-light bg-secondary">
         <Container>
-          <h1>Search for Free Games!</h1>
+          <h1>Search for Free to Play Games!</h1>
           <Form onSubmit={handleFormSubmit}>
             <Form.Row>
               <Col xs={12} md={8}>
@@ -124,8 +120,8 @@ const SearchGame = () => {
                 />
               </Col>
               <Col xs={12} md={4}>
-                <Button type="submit" variant="success" size="lg">
-                  Submit Search
+                <Button type="submit" variant="dark" size="lg">
+                  Search
                 </Button>
               </Col>
             </Form.Row>
@@ -137,7 +133,7 @@ const SearchGame = () => {
         <h2>
           {searchedGames.length
             ? `Viewing ${searchedGames.length} results:`
-            : 'Search for a genre to begin'}
+            : ''}
         </h2>
         <CardColumns>
           {searchedGames.map((game) => {
