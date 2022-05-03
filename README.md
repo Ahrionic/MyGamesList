@@ -23,7 +23,7 @@
 
   ***
   ## Visual Presentation
-  ![VisualPresentation](images/readmeVisualPresentation.png)
+  ![VisualPresentation](images/Screenshot_1.png)
 
   ***
   ## Installation
@@ -43,5 +43,8 @@
 
   ***
   ## Additional Info
-  - Github: asdf(https://github.com/asdf)
-  - Email: asdf
+  - Github: 
+      - Korey Luu(https://github.com/Ahrionic)
+      - Nathan Marcellous(https://github.com/TabuHana)
+      - Kien(https://github.com/NGGKI)
+      - Christopher Vazquez(https://github.com/ChrisVazquez6)
