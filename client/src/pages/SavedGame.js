@@ -63,9 +63,9 @@ const SavedGame = () => {
           {userData.savedGames?.map((game) => {
             return (
               <Card key={game.id} border="dark">
-                {game.thumbnail ? (
+                {game.image ? (
                   <Card.Img
-                    src={game.thumbnail}
+                    src={game.image}
                     alt={`The cover for ${game.title}`}
                     variant="top"
                   />

@@ -80,7 +80,7 @@ const SearchGame = () => {
   const handleSaveGame = async (gameId) => {
     console.log(gameId)
     console.log(searchedGames)
-    // find the game in `searchedGames` state by the matching id
+    // find the book in `searchedGames` state by the matching id
     const gameToSave = searchedGames.find((game) => game.gameId === gameId);
 
     // get token
