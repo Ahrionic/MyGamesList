@@ -19,7 +19,7 @@
 
   ***
   ## Technologies Used
-  
+  React, Graphql, mongoDB.
 
   ***
   ## Visual Presentation
