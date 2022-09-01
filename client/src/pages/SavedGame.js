@@ -31,11 +31,11 @@ const SavedGame = () => {
 
     try {
       const data = await removeGame({
-        variables: { gameId: `${removeGame.gameId}`, creator: removeGame.creator, title: removeGame.title, description: removeGame.description, image: removeGame.image },
+        variables: { gameId },
       });
 
       // upon success, remove game's id from localStorage
-      removeGameId([...removeGameId, removeGame.gameId]);
+      removeGameId(gameId);
     } catch (err) {
       console.error(err);
     }

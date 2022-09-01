@@ -44,8 +44,8 @@ export const SAVE_GAME = gql`
 `;
 
 export const REMOVE_GAME = gql`
-  mutation removeGame($creator: String!, $description: String!, $gameId: String!, $image: String!, $title: String!) {
-  removeGame(creator: $creator, description: $description, gameId: $gameId, image: $image, title: $title) {
+  mutation removeGame($gameId: ID!) {
+  removeGame(gameId: $gameId) {
     _id
     username
     email
