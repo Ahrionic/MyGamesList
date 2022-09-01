@@ -148,7 +148,7 @@ const SearchGame = () => {
                 ) : null}
                 <Card.Body>
                   <Card.Title>{game.title}</Card.Title>
-                  <p className="small">Creators: {game.title}</p>
+                  <p className="small">Creators: {game.creator}</p>
                   <Card.Text>{game.description}</Card.Text>
                   {Auth.loggedIn() && (
                     <Button
